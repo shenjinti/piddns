@@ -9,7 +9,7 @@ from aliyunsdkcore import client
 from aliyunsdkalidns.request.v20150109.DescribeDomainRecordsRequest import DescribeDomainRecordsRequest
 from aliyunsdkalidns.request.v20150109.UpdateDomainRecordRequest import UpdateDomainRecordRequest
 
-IPSVR = 'http://ip.cn'
+IPSVR = 'https://ip.cn'
 RE_IP = re.compile('(\d+.\d+.\d+.\d+)')
 
 KEY = os.getenv('ALIYUN_AK_KEY', 'None')
@@ -67,7 +67,10 @@ if __name__ == '__main__':
 
     domain = sys.argv[1]
 
-    print_('trying update ...', domain)
-
+    sub_name = 'www'
+    if domain.count('.') >= 2:
+        sub_name = domain.split('.', 1)[0]
+    
     ip = get_outbound_ip()
-    update_domain(domain, ip, ['www', '@'])
+    print_('trying update ...', domain, ip)
+    update_domain(domain, ip, [sub_name])
