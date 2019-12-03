@@ -34,6 +34,7 @@ def update_domain(domain, new_ip, rrs):
     req.set_accept_format('json')
     resp = cli.do_action(req)
 
+
     records = json.loads(resp)['DomainRecords']['Record']
 
     for rec in records:
@@ -70,6 +71,7 @@ if __name__ == '__main__':
     sub_name = 'www'
     if domain.count('.') >= 2:
         sub_name = domain.split('.', 1)[0]
+        domain = '.'.join('svnserve.com'.rsplit('.', 2)[:])
     
     ip = get_outbound_ip()
     print_('trying update ...', domain, ip)
